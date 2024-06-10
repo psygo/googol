@@ -1,5 +1,12 @@
 import Link from "next/link"
 
+import {
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton as ClerkUserButton,
+} from "@clerk/nextjs"
+
 import { CreateLinkDialog } from "./CreateLinkDialog"
 import { SearchBar } from "./SearchBar"
 
@@ -19,7 +26,9 @@ function LeftNav() {
         <h1 className="text-3xl font-bold tracking-tight">
           Googol
         </h1>
-        <h2 className="text-2xl text-gray-500">No AI bs</h2>
+        <h2 className="text-2xl text-gray-500">
+          No AI b.s.
+        </h2>
       </Link>
     </>
   )
@@ -30,6 +39,20 @@ function RightNav() {
     <div className="flex gap-2">
       <SearchBar />
       <CreateLinkDialog />
+      <UserButton />
     </div>
+  )
+}
+
+function UserButton() {
+  return (
+    <>
+      <SignedOut>
+        <SignInButton />
+      </SignedOut>
+      <SignedIn>
+        <ClerkUserButton />
+      </SignedIn>
+    </>
   )
 }

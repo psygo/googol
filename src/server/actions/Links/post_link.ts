@@ -1,10 +1,18 @@
-// import { db, links } from "@db"
+"use server"
 
-export async function postLink() {
+import { db, links } from "@db"
+
+import { currentUser } from "@clerk/nextjs/server"
+
+export async function postLink(link: string) {
   try {
-    // await db.insert(links).values({
-    //   link: "https://google.com",
-    // })
+    const user = await currentUser()
+    if (!user) return
+
+    await db.insert(links).values({
+      link,
+      creatorId: user.id,
+    })
   } catch (e) {
     console.error(e)
   }

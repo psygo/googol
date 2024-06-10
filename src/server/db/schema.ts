@@ -76,7 +76,7 @@ export const usersRelations = relations(
   ({ many }) => ({
     links: many(links),
     votes: many(votes),
-    // comments: many(comments),
+    comments: many(comments),
   }),
 )
 
@@ -88,10 +88,10 @@ export const links = createTable(
     // DB Metadata
     ...dateTimeCols(),
     // Data
-    link: varchar("first_name", { length: 4096 }),
-    clicks: integer("clicks"),
+    link: varchar("first_name", { length: 4096 }).notNull(),
+    clicks: integer("clicks").default(0).notNull(),
     // Relationships
-    creatorId: integer("creator_id").notNull(),
+    creatorId: varchar("creator_id").notNull(),
   },
   (table) => ({
     linksNanoidIdx: index("links_nano_id_idx").on(
@@ -111,7 +111,7 @@ export const linksRelations = relations(
   ({ one }) => ({
     creator: one(users, {
       fields: [links.creatorId],
-      references: [users.id],
+      references: [users.clerkId],
     }),
   }),
 )
@@ -124,16 +124,16 @@ export const votes = createTable("votes", {
   // Data
   points: integer("points").notNull(),
   // Relationships
-  voterId: integer("voter_id").notNull(),
+  voterId: varchar("voter_id").notNull(),
   linkId: varchar("link_id"),
 })
 
 export const votesRelations = relations(
   votes,
   ({ one }) => ({
-    creator: one(users, {
+    voter: one(users, {
       fields: [votes.voterId],
-      references: [users.id],
+      references: [users.clerkId],
     }),
     link: one(links, {
       fields: [votes.linkId],
@@ -150,16 +150,16 @@ export const comments = createTable("comments", {
   // Data
   content: varchar("content", { length: 4096 }).notNull(),
   // Relationships
-  commenterId: integer("commenter_id").notNull(),
+  commenterId: varchar("commenter_id").notNull(),
   linkId: varchar("link_id"),
 })
 
 export const commentsRelations = relations(
   comments,
   ({ one }) => ({
-    creator: one(users, {
+    commenter: one(users, {
       fields: [comments.commenterId],
-      references: [users.id],
+      references: [users.clerkId],
     }),
     node: one(links, {
       fields: [comments.linkId],

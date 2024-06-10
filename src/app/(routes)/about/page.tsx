@@ -1,6 +1,6 @@
 export default function AboutPage() {
   return (
-    <article className="prose dark:prose-invert px-2">
+    <article className="prose px-2 dark:prose-invert">
       <section>
         <h2 className="mt-4">What?</h2>
 
@@ -19,6 +19,27 @@ export default function AboutPage() {
             here
           </a>
           .
+        </p>
+      </section>
+
+      <section>
+        <h2>Why?</h2>
+
+        <p>
+          Just the transparency alone justifies this
+          project&apos;s existence to me, especially after
+          AI hype started obfuscating real content on the
+          web even more.
+        </p>
+        <p>
+          And having an alternative search engine, one
+          that&apos;s 100% human, serves another, useful
+          prism to web.
+        </p>
+        <p>
+          It&apos;s worth mentioning though, that this
+          project is not against AI itself, it&apos;s just
+          against its overuse.
         </p>
       </section>
     </article>

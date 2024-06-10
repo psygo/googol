@@ -23,6 +23,7 @@ import {
   FormMessage,
   Input,
 } from "@shad"
+import { postLink } from "../../server/actions/exports"
 
 const linkFormSchema = z.object({
   link: z.string().min(1),
@@ -38,13 +39,13 @@ export function CreateLinkDialog() {
     },
   })
 
-  function onSubmit(values: LinkFormType) {
-    console.log(values)
+  async function onSubmit(values: LinkFormType) {
+    await postLink(values.link)
   }
 
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button variant="outline" className="px-2">
           <Plus className="text-gray-300" />
         </Button>
