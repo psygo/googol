@@ -7,6 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Plus } from "lucide-react"
 
+import { postLink } from "@actions"
+
 import {
   Button,
   Dialog,
@@ -23,7 +25,6 @@ import {
   FormMessage,
   Input,
 } from "@shad"
-import { postLink } from "../../server/actions/exports"
 
 const linkFormSchema = z.object({
   link: z.string().min(1),
