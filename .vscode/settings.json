@@ -6,7 +6,7 @@
         "next-env.d.ts": true,
         "**/migrations/": false,
         "**/edgeql-js/": true,
-        ".env": true,
+        ".env": false,
         "**/env.js": true,
         ".eslintrc.cjs": true,
         ".gitignore": true,

@@ -6,6 +6,7 @@
 1. [ ] Search
 1. [ ] Clerk Setup
 1. [ ] Themes
+1. [ ] Pagination
 
 ## Later
 

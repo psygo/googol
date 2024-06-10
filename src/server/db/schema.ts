@@ -63,7 +63,9 @@ export const users = createTable(
     ...imageUrlCol(),
   },
   (table) => ({
-    nanoidIdx: index("nano_id_idx").on(table.nanoId),
+    usersNanoidIdx: index("users_nano_id_idx").on(
+      table.nanoId,
+    ),
     usernameIdx: index("username_idx").on(table.username),
     clerkIdIdx: index("clerk_id_idx").on(table.clerkId),
   }),
@@ -92,11 +94,13 @@ export const links = createTable(
     creatorId: integer("creator_id").notNull(),
   },
   (table) => ({
-    nanoidIdx: index("nano_id_idx").on(table.nanoId),
-    createdAtIdx: index("created_at_idx").on(
+    linksNanoidIdx: index("links_nano_id_idx").on(
+      table.nanoId,
+    ),
+    linksCreatedAtIdx: index("links_created_at_idx").on(
       table.createdAt,
     ),
-    updatedAtIdx: index("updated_at_idx").on(
+    linksUpdatedAtIdx: index("links_updated_at_idx").on(
       table.updatedAt,
     ),
   }),
