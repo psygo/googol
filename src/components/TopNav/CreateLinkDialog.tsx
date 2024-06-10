@@ -23,7 +23,7 @@ export function CreateLinkDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            Are you absolutely sure?
+            Create a New Link
           </DialogTitle>
           <DialogDescription>
             This action cannot be undone. This will

@@ -2,7 +2,7 @@ import { GeistSans } from "geist/font/sans"
 
 import { type WithReactChildren } from "@types"
 
-import { TopNav } from "@components"
+import { Footer, TopNav } from "@components"
 
 import { cn } from "@styles"
 import "@/styles/globals.css"
@@ -24,9 +24,12 @@ export default function RootLayout({
         GeistSans.variable,
       )}
     >
-      <body>
+      <body className="min-h-screen">
         <TopNav />
-        <main>{children}</main>
+        <main className="flex min-h-screen justify-center p-6">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   )

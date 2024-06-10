@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { CreateLinkDialog } from "./CreateLinkDialog"
 import { SearchBar } from "./SearchBar"
 
@@ -12,12 +13,14 @@ export function TopNav() {
 
 function LeftNav() {
   return (
-    <div className="flex items-baseline gap-4">
-      <h1 className="text-3xl font-bold tracking-tight">
-        Googol
-      </h1>
-      <h2 className="text-2xl text-gray-500">No AI bs</h2>
-    </div>
+    <>
+      <Link href="/" className="flex items-baseline gap-3">
+        <h1 className="text-3xl font-bold tracking-tight">
+          Googol
+        </h1>
+        <h2 className="text-2xl text-gray-500">No AI bs</h2>
+      </Link>
+    </>
   )
 }
 
