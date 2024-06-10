@@ -1,5 +1,7 @@
 # Googol
 
+A completely manual search engine.
+
 ## Dev
 
 ### Services and Tech Used

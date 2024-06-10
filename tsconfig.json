@@ -34,12 +34,18 @@
       "@/*": [
         "./src/*"
       ],
+      "@components": [
+        "./src/components/exports.ts"
+      ],
+      "@/components/*": [
+        "./src/components/*"
+      ],
       "@types": [
         "./src/types/exports.ts"
       ],
       "@/types/*": [
         "./src/types/*"
-      ]
+      ],
     }
   },
   "include": [
