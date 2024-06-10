@@ -1,8 +1,9 @@
 "use client"
 
 import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+
 import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 import {
   Form,
@@ -13,21 +14,21 @@ import {
   Input,
 } from "@shad"
 
-const formSchema = z.object({
+const searchFormSchema = z.object({
   search: z.string().min(1),
 })
 
-type FormSchema = z.infer<typeof formSchema>
+type SearchFormType = z.infer<typeof searchFormSchema>
 
 export function SearchBar() {
-  const searchForm = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
+  const searchForm = useForm<SearchFormType>({
+    resolver: zodResolver(searchFormSchema),
     defaultValues: {
       search: "",
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: SearchFormType) {
     console.log(values)
   }
 
