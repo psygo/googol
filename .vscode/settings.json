@@ -17,6 +17,7 @@
         "postcss.config.cjs": true,
         "prettier.config.js": true,
         "start-database.sh": true,
+        "components.json": true,
         "tailwind.config.ts": false,
     },
 }

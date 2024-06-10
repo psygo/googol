@@ -37,13 +37,25 @@
       "@components": [
         "./src/components/exports.ts"
       ],
-      "@/components/*": [
+      "@components/*": [
         "./src/components/*"
+      ],
+      "@shad": [
+        "./src/components/common/shad/exports.ts"
+      ],
+      "@shad/*": [
+        "./src/components/common/shad/*"
+      ],
+      "@styles": [
+        "./src/styles/exports.ts"
+      ],
+      "@styles/*": [
+        "./src/styles/*"
       ],
       "@types": [
         "./src/types/exports.ts"
       ],
-      "@/types/*": [
+      "@types/*": [
         "./src/types/*"
       ],
     }

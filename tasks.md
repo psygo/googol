@@ -1,5 +1,12 @@
 # Tasks
 
 1. [ ] Create Link
-2. [ ] List Links
-3. [ ] Search
+1. [ ] Install ShadUI
+1. [ ] List Links
+1. [ ] Search
+1. [ ] Clerk Setup
+1. [ ] Themes
+
+## Later
+
+1. [ ] Internationalization
