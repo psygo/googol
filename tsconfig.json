@@ -34,6 +34,12 @@
       "@/*": [
         "./src/*"
       ],
+      "@actions": [
+        "./src/server/actions/exports.ts"
+      ],
+      "@actions/*": [
+        "./src/server/actions/*"
+      ],
       "@components": [
         "./src/components/exports.ts"
       ],
@@ -45,6 +51,12 @@
       ],
       "@shad/*": [
         "./src/components/common/shad/*"
+      ],
+      "@db": [
+        "./src/server/db/exports.ts"
+      ],
+      "@db/*": [
+        "./src/server/db/*"
       ],
       "@styles": [
         "./src/styles/exports.ts"
