@@ -35,10 +35,8 @@ export async function getLinks() {
       })
       .from(links)
       .leftJoin(votes, eq(links.nanoId, votes.linkId))
-      .groupBy(links.id, votes.id)
+      .groupBy(links.id)
       .orderBy(desc(links.clicks))
-      
-    console.log("data", fetchedLinks)
 
     return fetchedLinks
   } catch (e) {
