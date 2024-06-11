@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import { ArrowDown, ArrowUp } from "lucide-react"
 
-import { type SelectLinkWithVoteStats } from "@types"
+import { type SelectLinkWithStats } from "@types"
 
 import { postVote } from "@actions"
 
@@ -13,7 +13,7 @@ import { cn } from "@styles"
 import { Button } from "@shad"
 
 type LinkCardProps = {
-  link: SelectLinkWithVoteStats
+  link: SelectLinkWithStats
 }
 
 type VoteButtonProps = LinkCardProps & {

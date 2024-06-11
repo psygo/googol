@@ -2,7 +2,9 @@
 
 import { useRouter } from "next/navigation"
 
-import { type SelectLinkWithVoteStats } from "@types"
+import { MousePointer } from "lucide-react"
+
+import { type SelectLinkWithStats } from "@types"
 
 import { postClick } from "@actions"
 
@@ -11,7 +13,7 @@ import { Badge, Button } from "@shad"
 import { VoteButton } from "./VoteButton"
 
 type LinkCardProps = {
-  link: SelectLinkWithVoteStats
+  link: SelectLinkWithStats
 }
 
 export function LinkCard({ link }: LinkCardProps) {
@@ -51,11 +53,11 @@ export function LinkCard({ link }: LinkCardProps) {
         )}
         <div className="flex gap-3">
           <Badge
-            className="w-max border-2 border-gray-500 bg-gray-900 px-3 text-base"
+            className="flex w-max gap-1 border-2 border-gray-500 bg-gray-900 px-3 text-base"
             variant="outline"
           >
-            {link.clicks} Click
-            {link.clicks === 1 ? "" : "s"}
+            <MousePointer className="h-[21px] w-[21px]" />
+            {link.stats.clicksTotal}
           </Badge>
           <VoteButton link={link} up={true} />
           <VoteButton link={link} up={false} />

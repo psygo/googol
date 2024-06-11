@@ -2,7 +2,7 @@
 
 import { desc, eq, getTableColumns, sql } from "drizzle-orm"
 
-import { db, links, votes } from "@db"
+import { clicks, db, links, votes } from "@db"
 
 import { currentUser } from "@clerk/nextjs/server"
 
@@ -27,6 +27,7 @@ export async function getLinks(search = "") {
       .select({
         ...getTableColumns(links),
         stats: {
+          clicksTotal: sql<number>/* sql */ `COUNT(${clicks})`,
           positiveVoteTotal: sql<number>/* sql */ `
             SUM(
               CASE WHEN ${userDistinctVotes.points} > 0
@@ -50,8 +51,8 @@ export async function getLinks(search = "") {
         userDistinctVotes,
         eq(links.nanoId, userDistinctVotes.linkId),
       )
+      .leftJoin(clicks, eq(links.nanoId, clicks.linkId))
       .groupBy(links.id)
-      .orderBy(desc(links.clicks))
 
     if (search !== "") {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

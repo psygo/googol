@@ -2,7 +2,13 @@
 
 import { JSDOM } from "jsdom"
 
-import { db, links } from "@db"
+import {
+  db,
+  links,
+  MAX_CONTENT_LENGTH,
+  MAX_DESCRIPTION_LENGTH,
+  MAX_TITLE_LENGTH,
+} from "@db"
 
 import { currentUser } from "@clerk/nextjs/server"
 
@@ -37,12 +43,19 @@ async function fetchUrlContents(url: string) {
   toBeDeleted.forEach((el) => el.remove())
 
   const title = dom.window.document.querySelector("title")
-  const titleStr = title?.innerHTML ?? ""
+  const titleStr =
+    title?.innerHTML.substring(0, MAX_TITLE_LENGTH) ?? ""
   const description =
     dom.window.document.querySelector("description")
-  const descriptionStr = description?.innerHTML ?? ""
+  const descriptionStr =
+    description?.innerHTML.substring(
+      0,
+      MAX_DESCRIPTION_LENGTH,
+    ) ?? ""
   const content = dom.window.document.querySelector("body")
-  const contentStr = content?.innerHTML ?? ""
+  const contentStr =
+    content?.innerHTML.substring(0, MAX_CONTENT_LENGTH) ??
+    ""
 
   return {
     title: titleStr,

@@ -75,10 +75,15 @@ export const usersRelations = relations(
   users,
   ({ many }) => ({
     links: many(links),
+    clicks: many(clicks),
     votes: many(votes),
     comments: many(comments),
   }),
 )
+
+export const MAX_TITLE_LENGTH = 512
+export const MAX_DESCRIPTION_LENGTH = 2_048
+export const MAX_CONTENT_LENGTH = 4_096
 
 export const links = createTable(
   "links",
@@ -89,10 +94,13 @@ export const links = createTable(
     ...dateTimeCols(),
     // Data
     url: varchar("url", { length: 2_048 }).notNull(),
-    clicks: integer("clicks").default(0).notNull(),
-    title: varchar("title", { length: 512 }),
-    description: varchar("description", { length: 2_048 }),
-    content: varchar("content", { length: 10_000 }),
+    title: varchar("title", { length: MAX_TITLE_LENGTH }),
+    description: varchar("description", {
+      length: MAX_DESCRIPTION_LENGTH,
+    }),
+    content: varchar("content", {
+      length: MAX_CONTENT_LENGTH,
+    }),
     // Relationships
     creatorId: varchar("creator_id").notNull(),
   },
@@ -116,6 +124,32 @@ export const linksRelations = relations(
     creator: one(users, {
       fields: [links.creatorId],
       references: [users.clerkId],
+    }),
+  }),
+)
+
+export const clicks = createTable("clicks", {
+  // IDs
+  id: serial("id").primaryKey(),
+  // Metadata
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  // Relationships
+  clickerId: varchar("clicker_id"),
+  linkId: varchar("link_id").notNull(),
+})
+
+export const clicksRelations = relations(
+  clicks,
+  ({ one }) => ({
+    voter: one(users, {
+      fields: [clicks.clickerId],
+      references: [users.clerkId],
+    }),
+    link: one(links, {
+      fields: [clicks.linkId],
+      references: [links.nanoId],
     }),
   }),
 )
