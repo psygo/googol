@@ -30,6 +30,7 @@ export function SearchBar() {
 
   function onSubmit(values: SearchFormType) {
     console.log(values)
+    
   }
 
   return (

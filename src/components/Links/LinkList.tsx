@@ -1,9 +1,9 @@
-import { type SelectLink } from "@types"
+import { type SelectLinkWithVoteStats } from "@types"
 
 import { LinkCard } from "./LinkCard"
 
 type LinkListProps = {
-  links: SelectLink[]
+  links: SelectLinkWithVoteStats[]
 }
 
 export function LinkList({ links }: LinkListProps) {

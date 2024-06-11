@@ -1,9 +1,10 @@
 "use server"
 
-import { db, links } from "@db"
+import { desc, eq, getTableColumns, sql } from "drizzle-orm"
+
+import { db, links, votes } from "@db"
 
 import { currentUser } from "@clerk/nextjs/server"
-import { desc } from "drizzle-orm"
 
 export async function getLinks() {
   try {
@@ -11,9 +12,33 @@ export async function getLinks() {
     if (!user) return
 
     const fetchedLinks = await db
-      .select()
+      .select({
+        ...getTableColumns(links),
+        stats: {
+          positiveVoteTotal: sql<number>/* sql */ `
+            SUM(
+              CASE WHEN ${votes.points} > 0
+                THEN ${votes.points} 
+                ELSE 0
+              END
+            )
+          `.mapWith(Number),
+          negativeVoteTotal: sql<number>/* sql */ `
+            SUM(
+              CASE WHEN ${votes.points} < 0
+                THEN ${votes.points} 
+                ELSE 0
+              END
+            )
+          `.mapWith(Number),
+        },
+      })
       .from(links)
+      .leftJoin(votes, eq(links.nanoId, votes.linkId))
+      .groupBy(links.id, votes.id)
       .orderBy(desc(links.clicks))
+      
+    console.log("data", fetchedLinks)
 
     return fetchedLinks
   } catch (e) {

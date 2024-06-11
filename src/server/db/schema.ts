@@ -129,7 +129,7 @@ export const votes = createTable("votes", {
   points: integer("points").notNull(),
   // Relationships
   voterId: varchar("voter_id").notNull(),
-  linkId: varchar("link_id"),
+  linkId: varchar("link_id").notNull(),
 })
 
 export const votesRelations = relations(
@@ -141,7 +141,7 @@ export const votesRelations = relations(
     }),
     link: one(links, {
       fields: [votes.linkId],
-      references: [links.id],
+      references: [links.nanoId],
     }),
   }),
 )
