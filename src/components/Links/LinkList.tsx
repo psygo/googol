@@ -1,4 +1,5 @@
 import { type SelectLink } from "@types"
+
 import { LinkCard } from "./LinkCard"
 
 type LinkListProps = {
@@ -6,7 +7,11 @@ type LinkListProps = {
 }
 
 export function LinkList({ links }: LinkListProps) {
-  return links.map((l) => (
-    <LinkCard key={l.nanoId} link={l} />
-  ))
+  return (
+    <div className="flex flex-col gap-2">
+      {links.map((l) => (
+        <LinkCard key={l.nanoId} link={l} />
+      ))}
+    </div>
+  )
 }

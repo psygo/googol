@@ -37,7 +37,7 @@ function dateTimeCols() {
 
 function imageUrlCol() {
   return {
-    imageUrl: varchar("image_url", { length: 1024 }),
+    imageUrl: varchar("image_url", { length: 1_024 }),
   }
 }
 
@@ -88,8 +88,11 @@ export const links = createTable(
     // DB Metadata
     ...dateTimeCols(),
     // Data
-    link: varchar("first_name", { length: 4096 }).notNull(),
+    url: varchar("url", { length: 2_048 }).notNull(),
     clicks: integer("clicks").default(0).notNull(),
+    title: varchar("title", { length: 512 }),
+    description: varchar("description", { length: 2_048 }),
+    content: varchar("content", { length: 10_000 }),
     // Relationships
     creatorId: varchar("creator_id").notNull(),
   },
@@ -103,6 +106,7 @@ export const links = createTable(
     linksUpdatedAtIdx: index("links_updated_at_idx").on(
       table.updatedAt,
     ),
+    linksUrlIdx: index("links_url_idx").on(table.url),
   }),
 )
 
@@ -148,7 +152,7 @@ export const comments = createTable("comments", {
   // Metadata
   ...dateTimeCols(),
   // Data
-  content: varchar("content", { length: 4096 }).notNull(),
+  content: varchar("content", { length: 4_096 }).notNull(),
   // Relationships
   commenterId: varchar("commenter_id").notNull(),
   linkId: varchar("link_id"),

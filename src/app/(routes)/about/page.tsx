@@ -39,7 +39,10 @@ export default function AboutPage() {
         <p>
           It&apos;s worth mentioning though, that this
           project is not against AI itself, it&apos;s just
-          against its overuse.
+          against its overuse. It would even be useful to
+          add some AI features to this project, such as
+          recommendationss, but only if the user is able to
+          easily deactivate it.
         </p>
       </section>
     </article>

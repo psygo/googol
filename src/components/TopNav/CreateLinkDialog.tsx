@@ -2,10 +2,14 @@
 
 import { z } from "zod"
 
+import { useState } from "react"
+
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { Plus } from "lucide-react"
+import { Loader2, Plus } from "lucide-react"
+
+import { Loading } from "@types"
 
 import { postLink } from "@actions"
 
@@ -13,7 +17,6 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -27,21 +30,25 @@ import {
 } from "@shad"
 
 const linkFormSchema = z.object({
-  link: z.string().min(1),
+  url: z.string().min(1),
 })
 
 type LinkFormType = z.infer<typeof linkFormSchema>
 
 export function CreateLinkDialog() {
+  const [loading, setLoading] = useState(Loading.NotYet)
+
   const searchForm = useForm<LinkFormType>({
     resolver: zodResolver(linkFormSchema),
     defaultValues: {
-      link: "",
+      url: "",
     },
   })
 
   async function onSubmit(values: LinkFormType) {
-    await postLink(values.link)
+    setLoading(Loading.Loading)
+    await postLink(values.url)
+    setLoading(Loading.Loaded)
   }
 
   return (
@@ -54,7 +61,7 @@ export function CreateLinkDialog() {
       <DialogContent>
         <DialogHeader className="gap-4">
           <DialogTitle>Add a New Link</DialogTitle>
-          <DialogDescription>
+          <div className="flex flex-col gap-3">
             <Form {...searchForm}>
               <form
                 onSubmit={searchForm.handleSubmit(onSubmit)}
@@ -62,7 +69,7 @@ export function CreateLinkDialog() {
               >
                 <FormField
                   control={searchForm.control}
-                  name="link"
+                  name="url"
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel>New Link</FormLabel>
@@ -80,13 +87,17 @@ export function CreateLinkDialog() {
                 <Button
                   type="submit"
                   variant="outline"
-                  className="border-green-500 text-green-500"
+                  disabled={loading === Loading.Loading}
+                  className="flex gap-2 border-green-500 text-green-500"
                 >
+                  {loading === Loading.Loading && (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  )}
                   Create Link
                 </Button>
               </form>
             </Form>
-          </DialogDescription>
+          </div>
         </DialogHeader>
       </DialogContent>
     </Dialog>
