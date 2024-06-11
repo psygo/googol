@@ -11,22 +11,34 @@ export async function getLinks(search = "") {
     const user = await currentUser()
     if (!user) return
 
+    const userDistinctVotes = db
+      .selectDistinctOn([votes.voterId, votes.linkId], {
+        ...getTableColumns(votes),
+      })
+      .from(votes)
+      .orderBy(
+        votes.voterId,
+        votes.linkId,
+        desc(votes.createdAt),
+      )
+      .as("userDistinctVotes")
+
     let linksQuery = db
       .select({
         ...getTableColumns(links),
         stats: {
           positiveVoteTotal: sql<number>/* sql */ `
             SUM(
-              CASE WHEN ${votes.points} > 0
-                THEN ${votes.points} 
+              CASE WHEN ${userDistinctVotes.points} > 0
+                THEN ${userDistinctVotes.points} 
                 ELSE 0
               END
             )
           `.mapWith(Number),
           negativeVoteTotal: sql<number>/* sql */ `
             SUM(
-              CASE WHEN ${votes.points} < 0
-                THEN ${votes.points} 
+              CASE WHEN ${userDistinctVotes.points} < 0
+                THEN ${userDistinctVotes.points} 
                 ELSE 0
               END
             )
@@ -34,7 +46,10 @@ export async function getLinks(search = "") {
         },
       })
       .from(links)
-      .leftJoin(votes, eq(links.nanoId, votes.linkId))
+      .leftJoin(
+        userDistinctVotes,
+        eq(links.nanoId, userDistinctVotes.linkId),
+      )
       .groupBy(links.id)
       .orderBy(desc(links.clicks))
 
