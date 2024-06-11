@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faGithub } from "@fortawesome/free-brands-svg-icons"
-import { faQuestion } from "@fortawesome/free-solid-svg-icons"
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons"
 
 import Link from "next/link"
 
@@ -23,7 +23,7 @@ export function Footer() {
         <FontAwesomeIcon
           className="h-6 w-6"
           color="gray"
-          icon={faQuestion}
+          icon={faCircleInfo}
         />
       </Link>
     </footer>
