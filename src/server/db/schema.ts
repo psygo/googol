@@ -9,6 +9,12 @@ import {
 } from "drizzle-orm/pg-core"
 
 import { standardNanoid } from "./nanoid"
+import {
+  MAX_COMMENT_LENGTH,
+  MAX_CONTENT_LENGTH,
+  MAX_DESCRIPTION_LENGTH,
+  MAX_TITLE_LENGTH,
+} from "./settings"
 
 export const createTable = pgTableCreator(
   (name) => `googol_${name}`,
@@ -80,10 +86,6 @@ export const usersRelations = relations(
     comments: many(comments),
   }),
 )
-
-export const MAX_TITLE_LENGTH = 512
-export const MAX_DESCRIPTION_LENGTH = 2_048
-export const MAX_CONTENT_LENGTH = 4_096
 
 export const links = createTable(
   "links",
@@ -186,7 +188,9 @@ export const comments = createTable("comments", {
   // Metadata
   ...dateTimeCols(),
   // Data
-  content: varchar("content", { length: 4_096 }).notNull(),
+  content: varchar("content", {
+    length: MAX_COMMENT_LENGTH,
+  }).notNull(),
   // Relationships
   commenterId: varchar("commenter_id").notNull(),
   linkId: varchar("link_id"),

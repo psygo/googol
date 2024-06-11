@@ -1,6 +1,7 @@
 import { getLink } from "@actions"
 
 import { LinkCard } from "@components"
+import { NewComment } from "../../../../components/Comments/NewComment"
 
 type LinkPageProps = {
   params: { link_id: string }
@@ -13,5 +14,10 @@ export default async function LinkPage({
 
   if (!link) return
 
-  return <LinkCard link={link} />
+  return (
+    <div className="flex flex-col gap-6">
+      <LinkCard link={link} />
+      <NewComment />
+    </div>
+  )
 }

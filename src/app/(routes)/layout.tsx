@@ -33,7 +33,9 @@ export default function RootLayout({
         <body className="min-h-screen">
           <TopNav />
           <main className="flex min-h-screen justify-center p-6">
-            {children}
+            <div className="w-full max-w-[600px]">
+              {children}
+            </div>
           </main>
           <Footer />
         </body>

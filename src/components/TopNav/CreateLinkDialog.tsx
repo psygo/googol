@@ -4,6 +4,8 @@ import { z } from "zod"
 
 import { useState } from "react"
 
+import { useRouter } from "next/navigation"
+
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -28,7 +30,6 @@ import {
   FormMessage,
   Input,
 } from "@shad"
-import { useRouter } from "next/navigation"
 
 const linkFormSchema = z.object({
   url: z.string().min(1),
