@@ -2,6 +2,10 @@
 
 import { z } from "zod"
 
+import { type FormEvent, useState } from "react"
+
+import { useRouter, useSearchParams } from "next/navigation"
+
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -21,23 +25,36 @@ const searchFormSchema = z.object({
 type SearchFormType = z.infer<typeof searchFormSchema>
 
 export function SearchBar() {
+  const searchParams = useSearchParams()
+  const [searchText, setSearchText] = useState(
+    searchParams.get("search") ?? "",
+  )
+
+  const router = useRouter()
   const searchForm = useForm<SearchFormType>({
     resolver: zodResolver(searchFormSchema),
-    defaultValues: {
-      search: "",
-    },
+    defaultValues: { search: searchText },
   })
 
-  function onSubmit(values: SearchFormType) {
-    console.log(values)
-    
+  function onSearchChange(e: FormEvent<HTMLFormElement>) {
+    const target = e.target as HTMLInputElement
+    const newValue = target.value
+    setSearchText(newValue)
+
+    const newSearchParams = new URLSearchParams(
+      searchParams,
+    )
+    newSearchParams.set("search", newValue)
+
+    if (newValue === "") router.push("/")
+    else router.push(`/?${newSearchParams.toString()}`)
   }
 
   return (
     <Form {...searchForm}>
       <form
-        onSubmit={searchForm.handleSubmit(onSubmit)}
-        className="w-[40vw] max-w-[300px]"
+        onChange={onSearchChange}
+        className="w-[40vw] max-w-[225px]"
       >
         <FormField
           control={searchForm.control}

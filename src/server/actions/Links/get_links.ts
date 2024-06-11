@@ -6,12 +6,12 @@ import { db, links, votes } from "@db"
 
 import { currentUser } from "@clerk/nextjs/server"
 
-export async function getLinks() {
+export async function getLinks(search = "") {
   try {
     const user = await currentUser()
     if (!user) return
 
-    const fetchedLinks = await db
+    let linksQuery = db
       .select({
         ...getTableColumns(links),
         stats: {
@@ -37,6 +37,18 @@ export async function getLinks() {
       .leftJoin(votes, eq(links.nanoId, votes.linkId))
       .groupBy(links.id)
       .orderBy(desc(links.clicks))
+
+    if (search !== "") {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      linksQuery = linksQuery.where(
+        sql/* sql */ `
+          LOWER(${links.title}) LIKE LOWER(${sql.raw(`'%${search}%'`)})
+        `,
+      )
+    }
+
+    const fetchedLinks = await linksQuery
 
     return fetchedLinks
   } catch (e) {
