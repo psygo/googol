@@ -23,10 +23,10 @@ export function LinkCard({ link }: LinkCardProps) {
     <Button
       variant="ghost"
       asChild
-      className="flex h-max cursor-pointer items-start rounded-md border-2 bg-gray-900 px-4 py-3 pb-4"
+      className="flex h-max w-full max-w-[600px] cursor-pointer items-start rounded-md border-2 bg-gray-900 px-4 py-3 pb-4"
       onClick={async () => {
         await postClick(link.nanoId)
-        router.push(link.url)
+        router.push(`/links/${link.nanoId}`)
       }}
     >
       <div className="flex flex-col gap-4">

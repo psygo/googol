@@ -28,6 +28,7 @@ import {
   FormMessage,
   Input,
 } from "@shad"
+import { useRouter } from "next/navigation"
 
 const linkFormSchema = z.object({
   url: z.string().min(1),
@@ -37,6 +38,8 @@ type LinkFormType = z.infer<typeof linkFormSchema>
 
 export function CreateLinkDialog() {
   const [loading, setLoading] = useState(Loading.NotYet)
+  const router = useRouter()
+  const [open, setOpen] = useState(false)
 
   const searchForm = useForm<LinkFormType>({
     resolver: zodResolver(linkFormSchema),
@@ -49,12 +52,18 @@ export function CreateLinkDialog() {
     setLoading(Loading.Loading)
     await postLink(values.url)
     setLoading(Loading.Loaded)
+    router.push("/")
+    setOpen(false)
   }
 
   return (
-    <Dialog>
+    <Dialog open={open}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="px-2">
+        <Button
+          variant="outline"
+          className="px-2"
+          onClick={() => setOpen(true)}
+        >
           <Plus className="text-gray-300" />
         </Button>
       </DialogTrigger>
