@@ -122,11 +122,14 @@ export const links = createTable(
 
 export const linksRelations = relations(
   links,
-  ({ one }) => ({
+  ({ one, many }) => ({
     creator: one(users, {
       fields: [links.creatorId],
       references: [users.clerkId],
     }),
+    clicks: many(clicks),
+    votes: many(votes),
+    comments: many(comments),
   }),
 )
 

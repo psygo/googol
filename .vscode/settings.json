@@ -7,7 +7,7 @@
         "**/migrations/": false,
         "**/edgeql-js/": true,
         ".env": false,
-        // "**/env.js": true,
+        "**/env.js": true,
         ".eslintrc.cjs": true,
         ".gitignore": true,
         ".prettierrc": true,
