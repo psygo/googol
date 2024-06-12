@@ -11,7 +11,10 @@ import {
 
 import "@utils/array"
 
-import { type NanoId } from "@types"
+import {
+  type NanoId,
+  type SelectLinkWithStatsAndCreator,
+} from "@types"
 
 import {
   clicks,
@@ -89,7 +92,9 @@ export async function getLinks(search = "") {
       )
     }
 
-    return await allLinksQuery
+    const ls = await allLinksQuery
+
+    return ls as SelectLinkWithStatsAndCreator[]
   } catch (e) {
     console.error(e)
   }
@@ -107,7 +112,7 @@ export async function getLink(linkNanoId: NanoId) {
       eq(links.nanoId, linkNanoId),
     )
 
-    return link.first()
+    return link.first() as SelectLinkWithStatsAndCreator
   } catch (e) {
     console.error(e)
   }
