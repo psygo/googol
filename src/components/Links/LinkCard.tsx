@@ -8,7 +8,8 @@ import { postClick } from "@actions"
 
 import { Button } from "@shad"
 
-import { ClickStats } from "./ClickStats"
+import { ClicksStats } from "./ClicksStats"
+import { CommentsStats } from "./CommentsStats"
 import { VoteButton } from "./VoteButton"
 
 type LinkCardProps = {
@@ -50,8 +51,11 @@ export function LinkCard({ link }: LinkCardProps) {
           </p>
         )}
         <div className="flex gap-3">
-          <ClickStats
+          <ClicksStats
             clicksTotal={link.stats.clicksTotal}
+          />
+          <CommentsStats
+            commentsTotal={link.stats.commentsTotal}
           />
           <VoteButton link={link} up={true} />
           <VoteButton link={link} up={false} />

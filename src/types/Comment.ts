@@ -18,3 +18,7 @@ export type InsertComment = InferInsertModel<
 export type SelectCommentWithCommenter = SelectComment & {
   commenter: SelectUser
 }
+
+export type WithCommentsStats = {
+  commentsTotal: number
+}

@@ -13,7 +13,7 @@ import "@utils/array"
 
 import { type NanoId } from "@types"
 
-import { clicks, db, links, votes } from "@db"
+import { clicks, comments, db, links, votes } from "@db"
 
 const userDistinctVotes = db
   .selectDistinctOn([votes.voterId, votes.linkId], {
@@ -32,6 +32,7 @@ const linksQuery = db
     ...getTableColumns(links),
     stats: {
       clicksTotal: sql<number>/* sql */ `COUNT(${clicks})`,
+      commentsTotal: sql<number>/* sql */ `COUNT(${comments})`,
       positiveVoteTotal: sql<number>/* sql */ `
         SUM(
           CASE WHEN ${userDistinctVotes.points} > 0
@@ -56,6 +57,7 @@ const linksQuery = db
     eq(links.nanoId, userDistinctVotes.linkId),
   )
   .leftJoin(clicks, eq(links.nanoId, clicks.linkId))
+  .leftJoin(comments, eq(links.nanoId, comments.linkId))
   .groupBy(links.id)
   .orderBy(desc(links.createdAt))
 

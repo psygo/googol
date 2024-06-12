@@ -2,13 +2,13 @@ import { MousePointer } from "lucide-react"
 
 import { Button } from "@shad"
 
-type ClickStatsProps = {
+type ClicksStatsProps = {
   clicksTotal: number
 }
 
-export function ClickStats({
+export function ClicksStats({
   clicksTotal,
-}: ClickStatsProps) {
+}: ClicksStatsProps) {
   return (
     <Button
       className="flex cursor-auto gap-2 rounded-full border-gray-300 py-1"

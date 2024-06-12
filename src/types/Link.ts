@@ -7,11 +7,12 @@ import {
 import { links } from "@db"
 
 import { type WithClickStats } from "./Click"
+import { type WithCommentsStats } from "./Comment"
 import { type WithVoteStats } from "./Vote"
 
 export type SelectLink = InferSelectModel<typeof links>
 export type InsertLink = InferInsertModel<typeof links>
 
 export type SelectLinkWithStats = SelectLink & {
-  stats: WithVoteStats & WithClickStats
+  stats: WithVoteStats & WithClickStats & WithCommentsStats
 }

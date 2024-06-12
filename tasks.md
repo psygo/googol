@@ -1,7 +1,7 @@
 # Tasks
 
-1. [ ] Vote Colors
-2. [ ] Deploy
+1. [ ] Deploy
+1. [ ] Comments Badge Stats
 
 ## Later
 
