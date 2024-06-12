@@ -1,7 +1,6 @@
 # Tasks
 
 1. [ ] Deploy
-1. [ ] Comments Badge Stats
 
 ## Later
 
