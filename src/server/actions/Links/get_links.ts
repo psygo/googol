@@ -13,7 +13,14 @@ import "@utils/array"
 
 import { type NanoId } from "@types"
 
-import { clicks, comments, db, links, votes } from "@db"
+import {
+  clicks,
+  comments,
+  db,
+  links,
+  users,
+  votes,
+} from "@db"
 
 const userDistinctVotes = db
   .selectDistinctOn([votes.voterId, votes.linkId], {
@@ -30,6 +37,9 @@ const userDistinctVotes = db
 const linksQuery = db
   .select({
     ...getTableColumns(links),
+    creator: {
+      ...getTableColumns(users),
+    },
     stats: {
       clicksTotal: sql<number>/* sql */ `COUNT(${clicks})`,
       commentsTotal: sql<number>/* sql */ `COUNT(${comments})`,
@@ -56,9 +66,10 @@ const linksQuery = db
     userDistinctVotes,
     eq(links.nanoId, userDistinctVotes.linkId),
   )
+  .leftJoin(users, eq(links.creatorId, users.clerkId))
   .leftJoin(clicks, eq(links.nanoId, clicks.linkId))
   .leftJoin(comments, eq(links.nanoId, comments.linkId))
-  .groupBy(links.id)
+  .groupBy(links.id, users.id)
   .orderBy(desc(links.createdAt))
 
 export async function getLinks(search = "") {

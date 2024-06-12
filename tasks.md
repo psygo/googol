@@ -1,6 +1,6 @@
 # Tasks
 
-1. [ ] Deploy
+1. [ ] Link Creator
 
 ## Later
 

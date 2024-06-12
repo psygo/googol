@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 
-import { type SelectLinkWithStats } from "@types"
+import { type SelectLinkWithStatsAndCreator } from "@types"
 
 import { postClick } from "@actions"
 
@@ -10,10 +10,11 @@ import { Button } from "@shad"
 
 import { ClicksStats } from "./ClicksStats"
 import { CommentsStats } from "./CommentsStats"
+import { Creator } from "./Creator"
 import { VoteButton } from "./VoteButton"
 
 type LinkCardProps = {
-  link: SelectLinkWithStats
+  link: SelectLinkWithStatsAndCreator
 }
 
 export function LinkCard({ link }: LinkCardProps) {
@@ -29,7 +30,7 @@ export function LinkCard({ link }: LinkCardProps) {
       }
     >
       <div className="flex flex-col gap-4">
-        <div className="flex items-baseline gap-3">
+        <div className="flex flex-wrap items-baseline gap-3">
           {link.title && (
             <h3 className="text-3xl font-semibold">
               {link.title}
@@ -44,6 +45,9 @@ export function LinkCard({ link }: LinkCardProps) {
           >
             {link.url}
           </a>
+          <p className="text-base text-gray-500">
+            {link.createdAt.toDateString()}
+          </p>
         </div>
         {link.description && (
           <p className="text-3xl font-semibold">
@@ -59,6 +63,7 @@ export function LinkCard({ link }: LinkCardProps) {
           />
           <VoteButton link={link} up={true} />
           <VoteButton link={link} up={false} />
+          <Creator creator={link.creator} />
         </div>
       </div>
     </Button>

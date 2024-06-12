@@ -17,10 +17,11 @@ This is the shape of the project's environment variables:
 
 ```env
 #-----------------------------------------------------------
-# 1. Drizzle
+# 1. DB
 
-POSTGRES_URL=
 NODE_ENV=
+
+DATABASE_URL=
 
 #-----------------------------------------------------------
 # 2. Clerk
