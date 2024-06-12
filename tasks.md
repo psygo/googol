@@ -1,11 +1,10 @@
 # Tasks
 
-1. [ ] Create Link
-1. [ ] List Links
-1. [ ] Search
-1. [ ] Themes
-1. [ ] Pagination
+1. [ ] Vote Colors
+2. [ ] Deploy
 
 ## Later
 
 1. [ ] Internationalization
+1. [ ] Themes
+1. [ ] Pagination

@@ -54,7 +54,7 @@ export function SearchBar() {
     <Form {...searchForm}>
       <form
         onChange={onSearchChange}
-        className="w-[40vw] max-w-[225px]"
+        className="w-full"
       >
         <FormField
           control={searchForm.control}

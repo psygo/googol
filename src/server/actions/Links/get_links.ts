@@ -15,8 +15,6 @@ import { type NanoId } from "@types"
 
 import { clicks, db, links, votes } from "@db"
 
-import { currentUser } from "@clerk/nextjs/server"
-
 const userDistinctVotes = db
   .selectDistinctOn([votes.voterId, votes.linkId], {
     ...getTableColumns(votes),
@@ -35,21 +33,21 @@ const linksQuery = db
     stats: {
       clicksTotal: sql<number>/* sql */ `COUNT(${clicks})`,
       positiveVoteTotal: sql<number>/* sql */ `
-      SUM(
-        CASE WHEN ${userDistinctVotes.points} > 0
-          THEN ${userDistinctVotes.points} 
-          ELSE 0
-        END
-      )
-    `.mapWith(Number),
+        SUM(
+          CASE WHEN ${userDistinctVotes.points} > 0
+            THEN ${userDistinctVotes.points} 
+            ELSE 0
+          END
+        )
+      `.mapWith(Number),
       negativeVoteTotal: sql<number>/* sql */ `
-      SUM(
-        CASE WHEN ${userDistinctVotes.points} < 0
-          THEN ${userDistinctVotes.points} 
-          ELSE 0
-        END
-      )
-    `.mapWith(Number),
+        SUM(
+          CASE WHEN ${userDistinctVotes.points} < 0
+            THEN ${userDistinctVotes.points} 
+            ELSE 0
+          END
+        )
+      `.mapWith(Number),
     },
   })
   .from(links)
@@ -59,12 +57,10 @@ const linksQuery = db
   )
   .leftJoin(clicks, eq(links.nanoId, clicks.linkId))
   .groupBy(links.id)
+  .orderBy(desc(links.createdAt))
 
 export async function getLinks(search = "") {
   try {
-    const user = await currentUser()
-    if (!user) return
-
     let allLinksQuery = linksQuery
 
     if (search !== "") {

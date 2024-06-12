@@ -9,10 +9,11 @@ import {
 
 import { CreateLinkDialog } from "./CreateLinkDialog"
 import { SearchBar } from "./SearchBar"
+import { Button } from "../common/shad/button"
 
 export function TopNav() {
   return (
-    <nav className="flex items-center justify-between bg-gray-900 px-3 py-3">
+    <nav className="flex items-center justify-between gap-2 bg-gray-900 px-3 py-3">
       <LeftNav />
       <RightNav />
     </nav>
@@ -26,7 +27,7 @@ function LeftNav() {
         <h1 className="text-3xl font-bold tracking-tight">
           Googol
         </h1>
-        <h2 className="text-2xl text-gray-500">
+        <h2 className="hidden text-2xl text-gray-500 md:block">
           No AI b.s.
         </h2>
       </Link>
@@ -38,7 +39,9 @@ function RightNav() {
   return (
     <div className="flex gap-2">
       <SearchBar />
-      <CreateLinkDialog />
+      <SignedIn>
+        <CreateLinkDialog />
+      </SignedIn>
       <UserButton />
     </div>
   )
@@ -48,7 +51,13 @@ function UserButton() {
   return (
     <>
       <SignedOut>
-        <SignInButton />
+        <Button
+          asChild
+          className="p-1 px-2"
+          variant="secondary"
+        >
+          <SignInButton />
+        </Button>
       </SignedOut>
       <SignedIn>
         <ClerkUserButton />
