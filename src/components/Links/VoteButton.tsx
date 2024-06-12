@@ -36,7 +36,7 @@ export function VoteButton({ link, up }: VoteButtonProps) {
     <Button
       className={cn(
         "flex gap-2 rounded-full py-1",
-        `border-${up ? "green" : "red"}-400`,
+        up ? "border-green-400" : "border-red-400",
       )}
       variant="outline"
       onClick={async (e) => {
@@ -52,7 +52,7 @@ export function VoteButton({ link, up }: VoteButtonProps) {
       <p
         className={cn(
           "text-base",
-          `text-${up ? "green" : "red"}-400`,
+          up ? "text-green-400" : "text-red-400",
         )}
       >
         {voteTotal}
