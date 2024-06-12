@@ -9,10 +9,11 @@ import {
 import { headers } from "next/headers"
 import { NextResponse } from "next/server"
 
+import { eq } from "drizzle-orm"
+
 import "@utils/array"
 
 import { db, users } from "@db"
-import { eq } from "drizzle-orm"
 
 const clerkWebhooksUserEventsSecret =
   process.env.CLERK_WEBHOOKS_USER_EVENTS!
@@ -58,6 +59,9 @@ export async function POST(req: Request) {
         case "user.updated":
           await updateUser(data)
           break
+        case "user.deleted":
+          await deleteUser(data)
+          break
         default:
           console.log(`${type} is not a managed event.`)
       }
@@ -78,12 +82,15 @@ async function createUser(userData: UserJSON) {
         username: userData.username!,
         email:
           userData.email_addresses.first().email_address,
+        imageUrl: userData.image_url,
       })
       .returning()
 
     await clerkClient.users.updateUser(userData.id, {
       publicMetadata: {
         nanoid: dbUserData.first().nanoId,
+      },
+      privateMetadata: {
         isAdmin: false,
       },
     })
@@ -100,7 +107,18 @@ async function updateUser(userData: UserJSON) {
         username: userData.username!,
         email:
           userData.email_addresses.first().email_address,
+        imageUrl: userData.image_url,
       })
+      .where(eq(users.clerkId, userData.id))
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+async function deleteUser(userData: UserJSON) {
+  try {
+    await db
+      .delete(users)
       .where(eq(users.clerkId, userData.id))
   } catch (e) {
     console.error(e)
