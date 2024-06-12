@@ -10,5 +10,5 @@ export type WithClickStats = {
   clicksTotal: number
 }
 
-export type SelectUser = InferSelectModel<typeof clicks>
-export type InsertUser = InferInsertModel<typeof clicks>
+export type SelectClick = InferSelectModel<typeof clicks>
+export type InsertClick = InferInsertModel<typeof clicks>

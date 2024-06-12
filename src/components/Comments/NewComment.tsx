@@ -4,6 +4,8 @@ import { z } from "zod"
 
 import { useState } from "react"
 
+import { useParams, useRouter } from "next/navigation"
+
 import { Loader2 } from "lucide-react"
 
 import { useForm } from "react-hook-form"
@@ -13,18 +15,17 @@ import { Loading } from "@types"
 
 import { MAX_COMMENT_LENGTH } from "@db/settings"
 
+import { postComment } from "@actions"
+
 import {
   Button,
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
   Textarea,
 } from "@shad"
-import { postComment } from "../../server/actions/Comments/post_comment"
-import { useParams } from "next/navigation"
 
 const commentFormSchema = z.object({
   content: z.string().min(1).max(MAX_COMMENT_LENGTH),
@@ -35,6 +36,8 @@ type CommentFormType = z.infer<typeof commentFormSchema>
 export function NewComment() {
   const [loading, setLoading] = useState(Loading.NotYet)
   const params = useParams()
+  const linkId = params.link_id as string
+  const router = useRouter()
 
   const searchForm = useForm<CommentFormType>({
     resolver: zodResolver(commentFormSchema),
@@ -45,11 +48,9 @@ export function NewComment() {
 
   async function onSubmit(values: CommentFormType) {
     setLoading(Loading.Loading)
-    await postComment(
-      params.link_id as string,
-      values.content,
-    )
+    await postComment(linkId, values.content)
     setLoading(Loading.Loaded)
+    router.push(`/links/${linkId}`)
   }
 
   return (
@@ -63,10 +64,9 @@ export function NewComment() {
           name="content"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>New Comment</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Your search here"
+                  placeholder="Your comment here"
                   {...field}
                 />
               </FormControl>

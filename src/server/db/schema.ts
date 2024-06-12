@@ -193,7 +193,7 @@ export const comments = createTable("comments", {
   }).notNull(),
   // Relationships
   commenterId: varchar("commenter_id").notNull(),
-  linkId: varchar("link_id"),
+  linkId: varchar("link_id").notNull(),
 })
 
 export const commentsRelations = relations(
@@ -205,7 +205,7 @@ export const commentsRelations = relations(
     }),
     node: one(links, {
       fields: [comments.linkId],
-      references: [links.id],
+      references: [links.nanoId],
     }),
   }),
 )

@@ -1,3 +1,5 @@
+export * from "./Click"
+export * from "./Comment"
 export * from "./id"
 export * from "./Link"
 export * from "./react"

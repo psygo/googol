@@ -11,5 +11,5 @@ export type WithVoteStats = {
   negativeVoteTotal: number
 }
 
-export type SelectUser = InferSelectModel<typeof votes>
-export type InsertUser = InferInsertModel<typeof votes>
+export type SelectVote = InferSelectModel<typeof votes>
+export type InsertVote = InferInsertModel<typeof votes>
